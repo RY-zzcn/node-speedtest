@@ -1,0 +1,110 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # 当推送以v开头的标签时触发，如v1.0.0
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm64, arm]
+        component: [panel, node]
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+      
+      - name: 设置Go环境
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      
+      - name: 获取版本号
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      
+      - name: 构建 ${{ matrix.component }} 程序 (${{ matrix.arch }})
+        run: |
+          # 设置GOARCH
+          if [ "${{ matrix.arch }}" = "amd64" ]; then
+            export GOARCH=amd64
+          elif [ "${{ matrix.arch }}" = "arm64" ]; then
+            export GOARCH=arm64
+          elif [ "${{ matrix.arch }}" = "arm" ]; then
+            export GOARCH=arm
+          fi
+          
+          # 构建程序
+          cd ${{ matrix.component }}
+          go build -o ${{ matrix.component }}-${{ matrix.arch }} .
+          
+          # 打包
+          tar -czvf ${{ matrix.component }}-${{ matrix.arch }}.tar.gz ${{ matrix.component }}-${{ matrix.arch }}
+          
+          # 移动到工作目录
+          mkdir -p ../dist
+          mv ${{ matrix.component }}-${{ matrix.arch }}.tar.gz ../dist/
+      
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.component }}-${{ matrix.arch }}
+          path: dist/${{ matrix.component }}-${{ matrix.arch }}.tar.gz
+          retention-days: 1
+
+  release:
+    name: 创建发布版本
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+      
+      - name: 获取版本号
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      
+      - name: 下载所有构建产物
+        uses: actions/download-artifact@v3
+        with:
+          path: dist
+      
+      - name: 准备发布文件
+        run: |
+          mkdir -p release
+          find dist -name "*.tar.gz" -exec cp {} release/ \;
+      
+      - name: 创建发布版本
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*
+          name: 节点管理测速系统 ${{ env.VERSION }}
+          body: |
+            # 节点管理测速系统 ${{ env.VERSION }}
+            
+            ## 发布内容
+            
+            - 面板程序 (amd64, arm64, arm)
+            - 节点程序 (amd64, arm64, arm)
+            
+            ## 安装方法
+            
+            ```bash
+            # 一键安装
+            curl -O https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/install.sh
+            chmod +x install.sh
+            ./install.sh --all --panel-url https://your-panel-domain.com
+            ```
+            
+            ## 更新日志
+            
+            - 初始版本发布
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
