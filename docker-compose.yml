@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  # 面板端服务
+  panel:
+    build: .
+    image: node-speedtest-panel
+    container_name: node-speedtest-panel
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/panel:/app/data
+      - ./panel/config.json:/app/panel/config.json
+    command: panel
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - node-speedtest-network
+
+  # 节点端服务
+  node:
+    build: .
+    image: node-speedtest-node
+    container_name: node-speedtest-node
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./data/node:/app/data
+      - ./node/config.json:/app/node/config.json
+    command: node
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - panel
+    networks:
+      - node-speedtest-network
+
+networks:
+  node-speedtest-network:
+    driver: bridge 

@@ -1,0 +1,53 @@
+# 编译生成的文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go语言相关
+*.o
+*.a
+*.test
+*.prof
+/vendor/
+/Godeps/
+
+# 日志文件
+*.log
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 配置文件（可能包含敏感信息）
+config.json
+.env
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+*~
+
+# IDE和编辑器文件
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+
+# 节点和面板编译后的二进制文件
+/node/node
+/panel/panel
+
+# 数据目录
+/data/
+/node/data/
+/panel/data/
+
+# 测试生成的文件
+/coverage/ 

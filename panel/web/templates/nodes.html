@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节点管理 - 节点管理测速系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>节点管理</h1>
+            <nav>
+                <ul>
+                    <li><a href="/dashboard">仪表盘</a></li>
+                    <li><a href="/nodes" class="active">节点管理</a></li>
+                    <li><a href="/speedtest">测速管理</a></li>
+                    <li><a href="/settings">系统设置</a></li>
+                    <li><a href="/logout">退出登录</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="card">
+                <h2>节点列表</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>节点名称</th>
+                                <th>IP地址</th>
+                                <th>状态</th>
+                                <th>上次在线</th>
+                                <th>系统信息</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="node-list">
+                            <!-- 节点数据将通过JavaScript动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>添加节点</h2>
+                <form id="add-node-form" class="form">
+                    <div class="form-group">
+                        <label for="node-name">节点名称</label>
+                        <input type="text" id="node-name" name="node_name" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn primary">生成节点</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card" id="node-install-section" style="display: none;">
+                <h2>节点安装</h2>
+                <div class="form-group">
+                    <label for="node-key">节点密钥</label>
+                    <input type="text" id="node-key" readonly>
+                    <button class="btn small" onclick="copyToClipboard('node-key')">复制</button>
+                </div>
+                <div class="form-group">
+                    <label for="node-install-cmd">安装命令 (从面板下载)</label>
+                    <div class="code-block">
+                        <pre id="node-install-cmd"></pre>
+                        <button class="btn small" onclick="copyToClipboard('node-install-cmd')">复制</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="node-install-cmd-github">安装命令 (从GitHub下载)</label>
+                    <div class="code-block">
+                        <pre id="node-install-cmd-github"></pre>
+                        <button class="btn small" onclick="copyToClipboard('node-install-cmd-github')">复制</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 节点管理测速系统</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        // 复制到剪贴板函数
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已复制到剪贴板');
+            }).catch(err => {
+                console.error('复制失败:', err);
+                showToast('复制失败');
+            });
+        }
+
+        // 显示提示消息
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+
+        // 加载节点列表
+        function loadNodes() {
+            fetch('/api/nodes')
+                .then(response => response.json())
+                .then(data => {
+                    const nodeList = document.getElementById('node-list');
+                    nodeList.innerHTML = '';
+                    
+                    if (data.nodes && data.nodes.length > 0) {
+                        data.nodes.forEach(node => {
+                            const row = document.createElement('tr');
+                            const status = node.online ? '在线' : '离线';
+                            const statusClass = node.online ? 'status-online' : 'status-offline';
+                            
+                            row.innerHTML = `
+                                <td>${node.id}</td>
+                                <td>${node.name}</td>
+                                <td>${node.ip || '-'}</td>
+                                <td><span class="status ${statusClass}">${status}</span></td>
+                                <td>${node.last_seen || '-'}</td>
+                                <td>${node.system_info || '-'}</td>
+                                <td>
+                                    <button class="btn small" onclick="runSpeedtest(${node.id})">测速</button>
+                                    <button class="btn small danger" onclick="deleteNode(${node.id})">删除</button>
+                                </td>
+                            `;
+                            nodeList.appendChild(row);
+                        });
+                    } else {
+                        nodeList.innerHTML = '<tr><td colspan="7" class="text-center">暂无节点数据</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('获取节点列表失败:', error);
+                    showToast('获取节点列表失败');
+                });
+        }
+
+        // 添加节点
+        document.getElementById('add-node-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nodeName = document.getElementById('node-name').value;
+            
+            fetch('/api/nodes/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    node_name: nodeName
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('节点创建成功');
+                    document.getElementById('node-key').value = data.node_key;
+                    
+                    // 设置安装命令
+                    const panelUrl = window.location.origin;
+                    const installCmd = `curl -L ${panelUrl}/api/install.sh | bash -s -- ${data.node_key} "${nodeName}"`;
+                    const installCmdGithub = `curl -L ${panelUrl}/api/install.sh | bash -s -- ${data.node_key} "${nodeName}" --github`;
+                    
+                    document.getElementById('node-install-cmd').innerText = installCmd;
+                    document.getElementById('node-install-cmd-github').innerText = installCmdGithub;
+                    document.getElementById('node-install-section').style.display = 'block';
+                    
+                    // 清空表单
+                    document.getElementById('node-name').value = '';
+                    
+                    // 重新加载节点列表
+                    loadNodes();
+                } else {
+                    showToast(data.message || '节点创建失败');
+                }
+            })
+            .catch(error => {
+                console.error('节点创建失败:', error);
+                showToast('节点创建失败');
+            });
+        });
+
+        // 删除节点
+        function deleteNode(nodeId) {
+            if (confirm('确定要删除此节点吗？')) {
+                fetch(`/api/nodes/${nodeId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('节点删除成功');
+                        loadNodes();
+                    } else {
+                        showToast(data.message || '节点删除失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('节点删除失败:', error);
+                    showToast('节点删除失败');
+                });
+            }
+        }
+
+        // 运行测速
+        function runSpeedtest(nodeId) {
+            fetch(`/api/speedtest/${nodeId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('测速任务已提交');
+                } else {
+                    showToast(data.message || '测速任务提交失败');
+                }
+            })
+            .catch(error => {
+                console.error('测速任务提交失败:', error);
+                showToast('测速任务提交失败');
+            });
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNodes();
+        });
+    </script>
+</body>
+</html> 

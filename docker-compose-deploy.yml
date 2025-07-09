@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  # 面板端服务
+  panel:
+    image: ry-zzcn/node-speedtest-panel:latest
+    container_name: node-speedtest-panel
+    restart: unless-stopped
+    ports:
+      - "${PANEL_PORT:-8080}:8080"
+    volumes:
+      - ./data/panel:/app/data
+      - ./config/panel.json:/app/config.json
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - node-speedtest-network
+
+  # 节点端服务（可选，通常节点部署在其他服务器）
+  node:
+    image: ry-zzcn/node-speedtest-node:latest
+    container_name: node-speedtest-node
+    restart: unless-stopped
+    ports:
+      - "${NODE_PORT:-8081}:8081"
+    volumes:
+      - ./data/node:/app/data
+      - ./config/node.json:/app/config.json
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - panel
+    networks:
+      - node-speedtest-network
+
+networks:
+  node-speedtest-network:
+    driver: bridge 
