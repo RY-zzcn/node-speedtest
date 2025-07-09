@@ -35,6 +35,11 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       
+      - name: 安装依赖
+        run: |
+          cd ${{ matrix.component }}
+          go mod tidy
+      
       - name: 构建 ${{ matrix.component }} 程序 (${{ matrix.arch }})
         run: |
           # 设置GOARCH
@@ -45,10 +50,68 @@ jobs:
           
           # 构建程序
           cd ${{ matrix.component }}
-          go build -v -o ${{ matrix.component }}-${{ matrix.arch }} .
+          
+          # 创建构建目录
+          mkdir -p build
+          
+          # 复制必要的资源文件
+          if [ "${{ matrix.component }}" = "panel" ] && [ -d "web" ]; then
+            cp -r web build/
+          fi
+          
+          # 构建可执行文件
+          go build -v -o build/${{ matrix.component }}-${{ matrix.arch }} .
+          
+          # 创建配置文件示例
+          if [ "${{ matrix.component }}" = "panel" ]; then
+            # 创建面板配置文件
+            echo '{' > build/config.json.example
+            echo '  "listen_port": "8080",' >> build/config.json.example
+            echo '  "database_path": "./data/panel.db",' >> build/config.json.example
+            echo '  "log_path": "./logs/panel.log",' >> build/config.json.example
+            echo '  "secret_key": "change_this_to_a_random_string",' >> build/config.json.example
+            echo '  "admin_username": "admin",' >> build/config.json.example
+            echo '  "admin_password": "admin",' >> build/config.json.example
+            echo '  "panel_url": "https://your-panel-domain.com",' >> build/config.json.example
+            echo '  "node_timeout": 120,' >> build/config.json.example
+            echo '  "node_check_interval": 60,' >> build/config.json.example
+            echo '  "speedtest_timeout": 300,' >> build/config.json.example
+            echo '  "max_concurrent_tests": 5,' >> build/config.json.example
+            echo '  "github_repo": "https://github.com/RY-zzcn/node-speedtest",' >> build/config.json.example
+            echo '  "github_version": "'${VERSION}'"' >> build/config.json.example
+            echo '}' >> build/config.json.example
+          elif [ "${{ matrix.component }}" = "node" ]; then
+            # 创建节点配置文件
+            echo '{' > build/config.json.example
+            echo '  "listen_port": "8081",' >> build/config.json.example
+            echo '  "log_path": "./logs/node.log",' >> build/config.json.example
+            echo '  "panel_url": "https://your-panel-domain.com",' >> build/config.json.example
+            echo '  "node_id": "",' >> build/config.json.example
+            echo '  "node_key": "",' >> build/config.json.example
+            echo '  "heartbeat_interval": 30,' >> build/config.json.example
+            echo '  "download_threads": 4,' >> build/config.json.example
+            echo '  "upload_threads": 2,' >> build/config.json.example
+            echo '  "ping_count": 10' >> build/config.json.example
+            echo '}' >> build/config.json.example
+          fi
+          
+          # 创建README文件
+          echo "# 节点管理测速系统 - ${{ matrix.component }} (${{ matrix.arch }})" > build/README.md
+          echo "" >> build/README.md
+          echo "版本: ${VERSION}" >> build/README.md
+          echo "" >> build/README.md
+          echo "## 安装说明" >> build/README.md
+          echo "" >> build/README.md
+          echo "1. 解压文件" >> build/README.md
+          echo "2. 重命名 \`config.json.example\` 为 \`config.json\` 并修改配置" >> build/README.md
+          echo "3. 运行 \`./${{ matrix.component }}-${{ matrix.arch }}\`" >> build/README.md
+          echo "" >> build/README.md
+          echo "更多详细信息，请参阅项目文档: https://github.com/RY-zzcn/node-speedtest" >> build/README.md
           
           # 打包
-          tar -czvf ${{ matrix.component }}-${{ matrix.arch }}.tar.gz ${{ matrix.component }}-${{ matrix.arch }}
+          cd build
+          tar -czvf ../${{ matrix.component }}-${{ matrix.arch }}.tar.gz *
+          cd ..
           
           # 移动到工作目录
           mkdir -p ../dist
