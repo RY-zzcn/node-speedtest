@@ -16,10 +16,10 @@ jobs:
     
     steps:
       - name: 检出代码
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: 设置Go环境
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '1.20'
       
@@ -50,7 +50,7 @@ jobs:
           mv ${{ matrix.component }}-${{ matrix.arch }}.tar.gz ../dist/
       
       - name: 上传构建产物
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.component }}-${{ matrix.arch }}
           path: dist/${{ matrix.component }}-${{ matrix.arch }}.tar.gz
@@ -63,14 +63,14 @@ jobs:
     
     steps:
       - name: 检出代码
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: 获取版本号
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       
       - name: 下载所有构建产物
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: dist
       
