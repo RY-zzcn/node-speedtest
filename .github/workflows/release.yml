@@ -5,6 +5,13 @@ on:
     tags:
       - 'v*' # 当推送以v开头的标签时触发，如v1.0.0
 
+# 为整个工作流设置权限
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
 jobs:
   build:
     name: Build and Release
@@ -58,6 +65,9 @@ jobs:
     name: 创建发布版本
     needs: build
     runs-on: ubuntu-latest
+    # 为release任务单独设置权限
+    permissions:
+      contents: write
     
     steps:
       - name: 检出代码
@@ -106,5 +116,4 @@ jobs:
             - 初始版本发布
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          token: ${{ secrets.GITHUB_TOKEN }} 
