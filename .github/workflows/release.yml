@@ -10,6 +10,7 @@ jobs:
     name: Build and Release
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false # 防止一个任务失败导致所有任务取消
       matrix:
         arch: [amd64, arm64, arm]
         component: [panel, node]
@@ -30,17 +31,14 @@ jobs:
       - name: 构建 ${{ matrix.component }} 程序 (${{ matrix.arch }})
         run: |
           # 设置GOARCH
-          if [ "${{ matrix.arch }}" = "amd64" ]; then
-            export GOARCH=amd64
-          elif [ "${{ matrix.arch }}" = "arm64" ]; then
-            export GOARCH=arm64
-          elif [ "${{ matrix.arch }}" = "arm" ]; then
-            export GOARCH=arm
+          export GOARCH=${{ matrix.arch }}
+          if [ "${{ matrix.arch }}" = "arm" ]; then
+            export GOARM=7
           fi
           
           # 构建程序
           cd ${{ matrix.component }}
-          go build -o ${{ matrix.component }}-${{ matrix.arch }} .
+          go build -v -o ${{ matrix.component }}-${{ matrix.arch }} .
           
           # 打包
           tar -czvf ${{ matrix.component }}-${{ matrix.arch }}.tar.gz ${{ matrix.component }}-${{ matrix.arch }}
@@ -73,14 +71,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: dist
+          merge-multiple: true
       
       - name: 准备发布文件
         run: |
           mkdir -p release
           find dist -name "*.tar.gz" -exec cp {} release/ \;
+          ls -la release/
       
       - name: 创建发布版本
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: release/*
           name: 节点管理测速系统 ${{ env.VERSION }}
