@@ -1,0 +1,15 @@
+{
+  "listen_port": "8080",
+  "database_path": "./data/panel.db",
+  "log_path": "./logs/panel.log",
+  "secret_key": "change_this_to_a_random_string",
+  "admin_username": "admin",
+  "admin_password": "admin",
+  "panel_url": "http://localhost:8080",
+  "node_timeout": 120,
+  "node_check_interval": 60,
+  "speedtest_timeout": 300,
+  "max_concurrent_tests": 5,
+  "github_repo": "https://github.com/RY-zzcn/node-speedtest",
+  "github_version": "v1.0.0"
+} 
