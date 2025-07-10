@@ -26,13 +26,13 @@
             background-color: var(--bg-color);
             margin: 0;
             padding: 0;
-            padding-top: var(--header-height); /* 为固定导航栏留出空间 */
+            padding-top: var(--header-height);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         header {
@@ -45,13 +45,6 @@
             right: 0;
             height: var(--header-height);
             z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        header.compact {
-            height: 40px;
-            background-color: rgba(52, 152, 219, 0.95);
-            backdrop-filter: blur(5px);
         }
 
         header .container {
@@ -59,98 +52,15 @@
             justify-content: space-between;
             align-items: center;
             height: 100%;
+            padding: 0 20px;
         }
 
         header h1 {
             margin: 0;
             font-size: 1.5em;
-            white-space: nowrap;
-            transition: all 0.3s ease;
         }
 
-        header.compact h1 {
-            font-size: 1.2em;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav li {
-            margin-left: 20px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 0.95em;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        nav a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .github-nav-link {
-            display: flex;
-            align-items: center;
-        }
-        
-        @media (max-width: 768px) {
-            .github-nav-link span {
-                display: none;
-            }
-        }
-
-        .toc {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .toc h2 {
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .toc ul {
-            padding-left: 20px;
-        }
-
-        .toc li {
-            margin-bottom: 8px;
-        }
-
-        .toc a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .toc a:hover {
-            text-decoration: underline;
-        }
-
-        section {
+        .card {
             background-color: white;
             border-radius: 5px;
             padding: 30px;
@@ -170,17 +80,42 @@
             margin-top: 25px;
         }
 
-        h4 {
+        a.button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
             margin-top: 20px;
-            color: #555;
         }
 
-        p {
-            margin: 15px 0;
+        a.button:hover {
+            background-color: var(--secondary-color);
         }
 
-        a {
+        .deployment-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .deployment-option {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .deployment-option h3 {
             color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
         pre {
@@ -189,1225 +124,118 @@
             border-radius: 5px;
             overflow-x: auto;
             border: 1px solid var(--border-color);
-            margin: 15px 0;
         }
 
         code {
             font-family: 'Courier New', Courier, monospace;
-            background-color: var(--code-bg);
-            padding: 2px 5px;
-            border-radius: 3px;
         }
 
-        .note {
-            background-color: #e3f2fd;
-            border-left: 4px solid var(--primary-color);
+        .alert {
             padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
+            border-radius: 5px;
+            margin: 20px 0;
         }
 
-        .warning {
-            background-color: #fff3e0;
-            border-left: 4px solid var(--warning-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
+        .alert-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
         }
 
-        .success {
-            background-color: #e8f5e9;
-            border-left: 4px solid var(--success-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
+        .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
         }
 
-        .danger {
-            background-color: #ffebee;
-            border-left: 4px solid var(--danger-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
-        }
-
-        .step {
-            margin-bottom: 20px;
-            counter-increment: step-counter;
-        }
-
-        .step::before {
-            content: counter(step-counter);
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 50%;
-            margin-right: 10px;
-            display: inline-block;
-            text-align: center;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 30px;
-            border-top: 1px solid var(--border-color);
-            color: #777;
-        }
-
-        /* 滚动进度条 */
-        .progress-container {
-            width: 100%;
-            height: 3px;
-            background: transparent;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        .progress-bar {
-            height: 3px;
-            background: rgba(255, 255, 255, 0.7);
-            width: 0%;
-        }
-
-        /* 返回顶部按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .github-link {
             display: flex;
-            justify-content: center;
             align-items: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-        }
-
-        .back-to-top:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        /* GitHub按钮样式 */
-        .github-button {
-            position: fixed;
-            bottom: 20px;
-            right: 70px;
-            background-color: var(--github-color);
             color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            transition: all 0.3s ease;
             text-decoration: none;
         }
-        
-        .github-button:hover {
-            transform: scale(1.1);
-            background-color: #000;
-        }
-        
-        .github-button svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
+
+        .github-link svg {
+            margin-right: 5px;
         }
 
-        /* 主内容区域调整 */
-        .main-content {
-            padding-top: 30px;
-        }
-
-        /* 响应式设计 */
         @media (max-width: 768px) {
-            header .container {
-                padding: 0 10px;
-            }
-
-            header h1 {
-                font-size: 1.2em;
-            }
-
-            nav ul {
-                justify-content: flex-end;
-            }
-
-            nav li {
-                margin-left: 5px;
-            }
-
-            nav a {
-                padding: 5px;
-                font-size: 0.85em;
-            }
-        }
-
-        @media (max-width: 576px) {
-            :root {
-                --header-height: 50px;
-            }
-            
-            header h1 {
-                font-size: 1em;
-            }
-
-            nav li {
-                margin-left: 2px;
-            }
-
-            nav a {
-                padding: 3px 5px;
-                font-size: 0.8em;
+            .deployment-options {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <header id="header">
+    <header>
         <div class="container">
-            <h1>节点管理测速系统 - 部署教程</h1>
-            <nav>
-                <ul>
-                    <li><a href="#面板部署" class="nav-link">面板部署</a></li>
-                    <li><a href="#节点部署" class="nav-link">节点部署</a></li>
-                    <li><a href="#nginx配置" class="nav-link">Nginx配置</a></li>
-                    <li><a href="#常见问题" class="nav-link">常见问题</a></li>
-                    <li>
-                        <a href="https://github.com/RY-zzcn/node-speedtest" target="_blank" class="nav-link github-nav-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="vertical-align: text-bottom; margin-right: 3px;">
-                                <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                            </svg>
-                            <span>GitHub</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+            <h1>节点管理测速系统</h1>
+            <a href="https://github.com/RY-zzcn/node-speedtest" class="github-link" target="_blank">
+                <svg height="24" viewBox="0 0 16 16" width="24" fill="white">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+                GitHub
+            </a>
         </div>
     </header>
 
-    <div class="back-to-top" id="back-to-top">↑</div>
-    
-    <a href="https://github.com/RY-zzcn/node-speedtest" target="_blank" class="github-button" title="查看GitHub项目">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-        </svg>
-    </a>
+    <div class="container">
+        <div class="card">
+            <h2>节点管理测速系统部署教程</h2>
+            <p>欢迎使用节点管理测速系统！本系统是一个用于管理和测试网络节点性能的工具，包括面板端和节点端两个主要组件。</p>
+            
+            <div class="alert alert-info">
+                <strong>提示：</strong> 我们提供了更详细的Markdown格式部署文档，请查看 <a href="https://github.com/RY-zzcn/node-speedtest/blob/main/docs/deployment.md" target="_blank">GitHub上的部署文档</a>。
+            </div>
 
-    <div class="container main-content">
-        <div class="toc">
-            <h2>目录</h2>
+            <h3>快速部署指南</h3>
+            <p>以下是几种常用的部署方式，选择一种适合您的方式进行部署：</p>
+
+            <div class="deployment-options">
+                <div class="deployment-option">
+                    <h3>一键部署（推荐）</h3>
+                    <p>使用交互式脚本快速部署：</p>
+                    <pre><code>curl -fsSL https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/quick-deploy.sh -o quick-deploy.sh
+chmod +x quick-deploy.sh
+./quick-deploy.sh</code></pre>
+                </div>
+
+                <div class="deployment-option">
+                    <h3>手动安装</h3>
+                    <p>使用安装脚本进行自定义安装：</p>
+                    <pre><code>curl -fsSL https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/install.sh -o install.sh
+chmod +x install.sh
+./install.sh --all --panel-url https://your-panel-domain.com</code></pre>
+                </div>
+
+                <div class="deployment-option">
+                    <h3>Docker部署</h3>
+                    <p>使用Docker Compose快速部署：</p>
+                    <pre><code>curl -fsSL https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/docker-compose.yml -o docker-compose.yml
+# 根据需要修改配置
+docker-compose up -d</code></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <strong>注意：</strong> 首次使用系统时，请务必修改默认的管理员用户名和密码！
+            </div>
+
+            <h3>系统要求</h3>
+            <p><strong>面板端：</strong> Linux系统，1核CPU，512MB内存，100MB存储空间</p>
+            <p><strong>节点端：</strong> Linux系统，1核CPU，256MB内存，50MB存储空间</p>
+
+            <h3>更多资源</h3>
+            <p>查看更多详细文档和资源：</p>
             <ul>
-                <li><a href="#一键部署">一键部署</a>
-                    <ul>
-                        <li><a href="#安装脚本一键部署">安装脚本一键部署</a></li>
-                        <li><a href="#docker快速部署">Docker快速部署</a></li>
-                    </ul>
-                </li>
-                <li><a href="#面板部署">面板部署</a>
-                    <ul>
-                        <li><a href="#docker部署">Docker部署</a></li>
-                        <li><a href="#手动部署">手动部署</a></li>
-                    </ul>
-                </li>
-                <li><a href="#节点部署">节点部署</a>
-                    <ul>
-                        <li><a href="#从面板下载安装">从面板下载安装</a></li>
-                        <li><a href="#从github下载安装">从GitHub下载安装</a></li>
-                        <li><a href="#节点手动部署">手动部署</a></li>
-                    </ul>
-                </li>
-                <li><a href="#nginx配置">Nginx反向代理配置</a></li>
-                <li><a href="#常见问题">常见问题</a></li>
+                <li><a href="https://github.com/RY-zzcn/node-speedtest/blob/main/docs/deployment.md">详细部署文档</a></li>
+                <li><a href="https://github.com/RY-zzcn/node-speedtest/blob/main/docs/configuration.md">配置说明文档</a></li>
+                <li><a href="https://github.com/RY-zzcn/node-speedtest/blob/main/docs/faq.md">常见问题解答</a></li>
+                <li><a href="https://github.com/RY-zzcn/node-speedtest/issues">问题反馈</a></li>
             </ul>
+
+            <a href="https://github.com/RY-zzcn/node-speedtest" class="button" target="_blank">访问GitHub项目</a>
         </div>
-
-        <section id="一键部署">
-            <h2>一键部署</h2>
-            <p>一键部署是最简单的部署方式，只需几个命令即可完成整个系统的安装。我们提供了两种一键部署方式：安装脚本一键部署和Docker快速部署。</p>
-
-            <div class="note">
-                <strong>注意：</strong> 一键部署适合快速体验系统或在简单环境中使用。对于生产环境，建议了解详细的部署步骤并根据实际需求进行配置。
-            </div>
-
-            <h3 id="安装脚本一键部署">安装脚本一键部署</h3>
-            <p>使用安装脚本可以自动完成系统环境检测、依赖安装、配置文件创建和服务启动等操作。</p>
-            
-            <div class="step">下载安装脚本</div>
-            <pre>curl -O https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/install.sh
-chmod +x install.sh</pre>
-
-            <div class="step">部署面板和本地节点</div>
-            <pre>./install.sh --all --panel-url https://your-panel-domain.com</pre>
-
-            <div class="step">或者只部署面板</div>
-            <pre>./install.sh --panel --panel-url https://your-panel-domain.com --admin-username admin --admin-password your_password</pre>
-
-            <div class="step">或者只部署节点</div>
-            <pre>./install.sh --node --panel-url https://your-panel-domain.com --node-name "香港节点"</pre>
-
-            <div class="success">
-                <p><strong>安装脚本参数说明：</strong></p>
-                <ul>
-                    <li><code>--panel</code>: 只安装面板</li>
-                    <li><code>--node</code>: 只安装节点</li>
-                    <li><code>--all</code>: 同时安装面板和节点（默认）</li>
-                    <li><code>--docker</code>: 使用Docker部署</li>
-                    <li><code>--panel-port PORT</code>: 指定面板端口（默认: 8080）</li>
-                    <li><code>--node-port PORT</code>: 指定节点端口（默认: 8081）</li>
-                    <li><code>--panel-url URL</code>: 指定面板URL（必须指定）</li>
-                    <li><code>--node-name NAME</code>: 指定节点名称（默认: 本机主机名）</li>
-                    <li><code>--admin-username USER</code>: 指定管理员用户名（默认: admin）</li>
-                    <li><code>--admin-password PASS</code>: 指定管理员密码（默认: admin）</li>
-                    <li><code>--help</code>: 显示帮助信息</li>
-                </ul>
-            </div>
-
-            <div class="warning">
-                <p><strong>安装要求：</strong></p>
-                <ul>
-                    <li>支持的系统：Debian/Ubuntu、CentOS/RHEL、Alpine</li>
-                    <li>支持的架构：amd64（x86_64）、arm64（aarch64）、arm（armv7l）</li>
-                    <li>需要root权限执行安装脚本</li>
-                    <li>需要开放相应的端口（默认面板端口8080，节点端口8081）</li>
-                </ul>
-            </div>
-
-            <h3 id="docker快速部署">Docker快速部署</h3>
-            <p>如果您熟悉Docker，可以使用Docker快速部署脚本，它会自动配置和启动所有必要的容器。</p>
-            
-            <div class="step">下载Docker快速部署脚本</div>
-            <pre>curl -O https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/quick-deploy.sh
-chmod +x quick-deploy.sh</pre>
-
-            <div class="step">使用默认配置部署</div>
-            <pre>./quick-deploy.sh</pre>
-
-            <div class="step">或者自定义配置部署</div>
-            <pre>./quick-deploy.sh --panel-port 8080 --admin-username admin --admin-password your_password --node-name "本地节点"</pre>
-
-            <div class="success">
-                <p><strong>Docker快速部署参数说明：</strong></p>
-                <ul>
-                    <li><code>--panel-port PORT</code>: 指定面板端口（默认: 8080）</li>
-                    <li><code>--node-port PORT</code>: 指定节点端口（默认: 8081）</li>
-                    <li><code>--panel-url URL</code>: 指定面板URL（默认: http://服务器IP:面板端口）</li>
-                    <li><code>--admin-username USER</code>: 指定管理员用户名（默认: admin）</li>
-                    <li><code>--admin-password PASS</code>: 指定管理员密码（默认: admin）</li>
-                    <li><code>--install-dir DIR</code>: 指定安装目录（默认: 当前目录/node-speedtest）</li>
-                    <li><code>--node-name NAME</code>: 指定本地节点名称（默认: 本地节点）</li>
-                </ul>
-            </div>
-
-            <div class="warning">
-                <p><strong>Docker部署要求：</strong></p>
-                <ul>
-                    <li>已安装Docker和Docker Compose</li>
-                    <li>如果未安装，脚本会尝试自动安装</li>
-                    <li>需要开放相应的端口（默认面板端口8080，节点端口8081）</li>
-                </ul>
-            </div>
-
-            <div class="note">
-                <p><strong>部署完成后：</strong> 您可以通过 <code>http://服务器IP:8080</code> 访问面板，默认用户名和密码均为 <code>admin</code>。如果使用了自定义配置，请使用您指定的用户名和密码。</p>
-            </div>
-        </section>
-
-        <section id="面板部署">
-            <h2>面板部署</h2>
-            <p>面板是整个系统的核心，负责管理所有节点和展示测速结果。您可以选择使用Docker部署或手动部署面板。</p>
-
-            <div class="note">
-                <strong>注意：</strong> 部署面板前，请确保您的服务器已安装必要的依赖，并开放相应的端口（默认为8080）。
-            </div>
-
-            <h3 id="docker部署">Docker部署</h3>
-            <p>使用Docker是最简单的部署方式，只需要几个命令即可完成部署。</p>
-            
-            <div class="note">
-                <p><strong>提示：</strong> Docker部署适合对Docker有基本了解的用户，如果您不熟悉Docker，可以尝试手动部署。</p>
-            </div>
-
-            <pre>
-# 拉取镜像
-docker pull ry-zzcn/node-speedtest-panel:latest
-
-# 创建数据目录
-mkdir -p /opt/node-speedtest-panel/data
-mkdir -p /opt/node-speedtest-panel/logs
-
-# 创建配置文件
-cat > /opt/node-speedtest-panel/config.json << EOF
-{
-  "listen_port": "8080",
-  "database_path": "/app/data/panel.db",
-  "log_path": "/app/logs/panel.log",
-  "secret_key": "change_this_to_a_random_string",
-  "admin_username": "admin",
-  "admin_password": "admin",
-  "panel_url": "https://your-panel-domain.com",
-  "node_timeout": 120,
-  "node_check_interval": 60,
-  "speedtest_timeout": 300,
-  "max_concurrent_tests": 5,
-  "github_repo": "https://github.com/RY-zzcn/node-speedtest",
-  "github_version": "v1.0.0"
-}
-EOF
-
-# 启动容器
-docker run -d \
-  --name node-speedtest-panel \
-  -p 8080:8080 \
-  -v /opt/node-speedtest-panel/config.json:/app/config.json \
-  -v /opt/node-speedtest-panel/data:/app/data \
-  -v /opt/node-speedtest-panel/logs:/app/logs \
-  --restart always \
-  ry-zzcn/node-speedtest-panel:latest</pre>
-  
-            <div class="success">
-                <p><strong>Docker命令说明：</strong></p>
-                <ul>
-                    <li><code>-d</code>: 后台运行容器</li>
-                    <li><code>--name</code>: 指定容器名称</li>
-                    <li><code>-p</code>: 端口映射，格式为"主机端口:容器端口"</li>
-                    <li><code>-v</code>: 挂载卷，格式为"主机路径:容器路径"</li>
-                    <li><code>--restart always</code>: 容器自动重启策略</li>
-                </ul>
-            </div>
-
-            <div class="warning">
-                <strong>重要提示：</strong> 请务必修改配置文件中的 <code>secret_key</code>、<code>admin_username</code> 和 <code>admin_password</code> 字段，以确保系统安全。同时，将 <code>panel_url</code> 修改为您实际的面板访问地址（包含协议，如 https://speedtest.example.com）。
-            </div>
-
-            <h3 id="手动部署">手动部署</h3>
-            <p>如果您不想使用Docker，也可以手动部署面板。</p>
-
-            <h4>前提条件</h4>
-            <ul>
-                <li>Go 1.18或更高版本</li>
-                <li>Git</li>
-            </ul>
-
-            <h4>部署步骤</h4>
-            <pre>
-# 克隆仓库
-git clone https://github.com/RY-zzcn/node-speedtest.git
-cd node-speedtest/panel
-
-# 编译
-go build -o panel
-
-# 创建数据目录
-mkdir -p data logs
-
-# 创建配置文件
-cat > config.json << EOF
-{
-  "listen_port": "8080",
-  "database_path": "./data/panel.db",
-  "log_path": "./logs/panel.log",
-  "secret_key": "change_this_to_a_random_string",
-  "admin_username": "admin",
-  "admin_password": "admin",
-  "panel_url": "https://your-panel-domain.com",
-  "node_timeout": 120,
-  "node_check_interval": 60,
-  "speedtest_timeout": 300,
-  "max_concurrent_tests": 5,
-  "github_repo": "https://github.com/RY-zzcn/node-speedtest",
-  "github_version": "v1.0.0"
-}
-EOF
-
-# 创建systemd服务
-sudo cat > /etc/systemd/system/node-speedtest-panel.service << EOF
-[Unit]
-Description=节点管理测速系统 - 面板服务
-After=network.target
-
-[Service]
-Type=simple
-User=root
-WorkingDirectory=$(pwd)
-ExecStart=$(pwd)/panel
-Restart=always
-RestartSec=10
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# 启动服务
-sudo systemctl daemon-reload
-sudo systemctl enable node-speedtest-panel
-sudo systemctl start node-speedtest-panel
-
-# 检查服务状态
-sudo systemctl status node-speedtest-panel</pre>
-
-            <div class="success">
-                <strong>成功提示：</strong> 部署完成后，您可以通过 <code>http://服务器IP:8080</code> 访问面板，默认用户名和密码均为 <code>admin</code>。
-            </div>
-        </section>
-
-        <section id="节点部署">
-            <h2>节点部署</h2>
-            <p>节点是系统的分布式组件，负责执行实际的测速任务。节点部署有多种方式，您可以根据自己的需求选择合适的方式。</p>
-
-            <h3 id="从面板下载安装">从面板下载安装</h3>
-            <p>这是推荐的安装方式，面板会自动生成安装命令。适用于节点服务器可以直接访问面板服务器的情况。</p>
-
-            <div class="step">登录面板（默认地址为 <code>http://面板IP:8080</code>，默认用户名和密码均为 <code>admin</code>）</div>
-            <div class="step">进入"节点管理"页面（点击左侧导航栏的"节点管理"）</div>
-            <div class="step">点击"添加节点"按钮，在弹出的表单中输入节点名称（如"香港节点"、"美国节点"等）</div>
-            <div class="step">点击"生成节点"按钮，系统会生成节点密钥和安装命令</div>
-            <div class="step">复制生成的安装命令（从面板下载）</div>
-            <div class="step">使用SSH连接到节点服务器，以root用户身份运行安装命令</div>
-
-            <pre>curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_NAME</pre>
-
-            <div class="note">
-                <p><strong>提示：</strong> 面板生成的安装命令已经包含了正确的节点密钥和节点名称，无需手动替换参数。这是最简单的节点部署方式，面板会自动处理节点注册和配置。</p>
-            </div>
-
-            <div class="note">
-                <p><strong>注意事项：</strong></p>
-                <ul>
-                    <li>请将 <code>your-panel-domain.com</code> 替换为您实际的面板域名或IP地址</li>
-                    <li>将 <code>NODE_KEY</code> 替换为面板生成的节点密钥（32位字符串）</li>
-                    <li>将 <code>NODE_NAME</code> 替换为您设置的节点名称（如"香港节点"）</li>
-                    <li>安装过程需要root权限，请确保使用root用户或使用sudo运行</li>
-                    <li>安装脚本会自动创建系统服务并设置开机自启动</li>
-                </ul>
-            </div>
-            
-            <div class="success">
-                <p><strong>安装完成后：</strong> 节点会自动连接到面板，您可以在面板的节点管理页面看到节点状态。如果节点显示为"在线"，则表示安装成功。</p>
-            </div>
-
-            <h3 id="从github下载安装">从GitHub下载安装</h3>
-            <p>如果节点服务器无法直接访问面板服务器，但可以访问GitHub，可以使用从GitHub下载的方式安装。这种方式适用于面板服务器在内网或有防火墙限制的情况。</p>
-
-            <div class="step">登录面板（默认地址为 <code>http://面板IP:8080</code>）</div>
-            <div class="step">进入"节点管理"页面（点击左侧导航栏的"节点管理"）</div>
-            <div class="step">点击"添加节点"按钮，在弹出的表单中输入节点名称</div>
-            <div class="step">点击"生成节点"按钮，系统会生成节点密钥和两种安装命令</div>
-            <div class="step">复制生成的安装命令（从GitHub下载），该命令带有 <code>--github</code> 参数</div>
-            <div class="step">使用SSH连接到节点服务器，以root用户身份运行安装命令</div>
-
-            <pre>curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_NAME --github</pre>
-
-            <div class="warning">
-                <p><strong>重要提示：</strong></p>
-                <ul>
-                    <li>使用GitHub下载方式时，请确保节点服务器能够访问GitHub（<code>github.com</code>）</li>
-                    <li>如果GitHub访问受限（例如在中国大陆地区），安装可能会失败</li>
-                    <li>节点服务器仍需要能够访问面板服务器的API端点以获取安装脚本</li>
-                    <li>安装完成后，节点仍需要能够连接到面板服务器进行心跳和数据上报</li>
-                </ul>
-            </div>
-            
-            <div class="note">
-                <p><strong>工作原理：</strong> 使用 <code>--github</code> 参数时，安装脚本会从GitHub下载节点程序，而不是从面板服务器下载。如果从GitHub下载失败，脚本会自动尝试从面板服务器下载。</p>
-            </div>
-
-            <h3 id="节点手动部署">手动部署</h3>
-            <p>如果您不想使用安装脚本，也可以手动部署节点。</p>
-
-            <h4>前提条件</h4>
-            <ul>
-                <li>Go 1.18或更高版本</li>
-                <li>Git</li>
-            </ul>
-
-            <h4>部署步骤</h4>
-            <pre>
-# 克隆仓库
-git clone https://github.com/RY-zzcn/node-speedtest.git
-cd node-speedtest/node
-
-# 编译
-go build -o node-speedtest
-
-# 创建数据目录
-mkdir -p /opt/node-speedtest/data
-mkdir -p /opt/node-speedtest/logs
-
-# 移动可执行文件
-mv node-speedtest /opt/node-speedtest/
-
-# 创建配置文件
-cat > /opt/node-speedtest/config.json << EOF
-{
-  "panel_url": "https://your-panel-domain.com",
-  "node_key": "YOUR_NODE_KEY",
-  "node_name": "YOUR_NODE_NAME",
-  "listen_port": "8081",
-  "log_path": "/opt/node-speedtest/logs/node.log",
-  "data_dir": "/opt/node-speedtest/data",
-  "heartbeat_interval": 30,
-  "speedtest_timeout": 120,
-  "download_threads": 4,
-  "upload_threads": 2,
-  "ping_count": 10
-}
-EOF
-
-# 创建systemd服务
-cat > /etc/systemd/system/node-speedtest.service << EOF
-[Unit]
-Description=节点管理测速系统 - 节点服务
-After=network.target
-
-[Service]
-Type=simple
-User=root
-WorkingDirectory=/opt/node-speedtest
-ExecStart=/opt/node-speedtest/node-speedtest -conf=/opt/node-speedtest/config.json
-Restart=always
-RestartSec=10
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# 启动服务
-systemctl daemon-reload
-systemctl enable node-speedtest
-systemctl start node-speedtest
-
-# 检查服务状态
-systemctl status node-speedtest</pre>
-        </section>
-
-        <section id="nginx配置">
-            <h2>Nginx反向代理配置</h2>
-            <p>如果您想使用域名访问面板，可以使用Nginx作为反向代理。这样可以提供SSL加密、域名访问和更好的安全性。</p>
-            
-            <div class="warning">
-                <p><strong>前提条件：</strong></p>
-                <ul>
-                    <li>已安装Nginx服务器（<code>apt install nginx</code> 或 <code>yum install nginx</code>）</li>
-                    <li>已获取SSL证书（可使用Let's Encrypt免费证书）</li>
-                    <li>已配置DNS将域名解析到服务器IP</li>
-                </ul>
-            </div>
-
-            <h3>步骤1：安装Nginx（如果尚未安装）</h3>
-            <pre>
-# Debian/Ubuntu系统
-apt update
-apt install -y nginx
-
-# CentOS/RHEL系统
-yum install -y epel-release
-yum install -y nginx</pre>
-
-            <h3>步骤2：获取SSL证书（使用Certbot）</h3>
-            <pre>
-# Debian/Ubuntu系统
-apt install -y certbot python3-certbot-nginx
-certbot --nginx -d your-panel-domain.com
-
-# CentOS/RHEL系统
-yum install -y certbot python3-certbot-nginx
-certbot --nginx -d your-panel-domain.com</pre>
-
-            <h3>步骤3：创建Nginx配置文件</h3>
-            <pre>
-# 创建配置文件
-cat > /etc/nginx/conf.d/node-speedtest-panel.conf << 'EOF'
-server {
-    listen 80;
-    server_name your-panel-domain.com;
-    
-    # 重定向HTTP到HTTPS
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    server_name your-panel-domain.com;
-    
-    # SSL证书配置
-    ssl_certificate /etc/letsencrypt/live/your-panel-domain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your-panel-domain.com/privkey.pem;
-    
-    # SSL参数
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers on;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-    
-    # 安全相关头部
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-Frame-Options SAMEORIGIN;
-    add_header X-XSS-Protection "1; mode=block";
-    
-    # 代理设置
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        
-        # WebSocket支持（用于实时更新）
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        
-        # 超时设置
-        proxy_connect_timeout 60s;
-        proxy_send_timeout 60s;
-        proxy_read_timeout 60s;
-    }
-    
-    # 静态文件缓存
-    location /static/ {
-        proxy_pass http://localhost:8080;
-        proxy_cache_valid 200 1d;
-        expires 1d;
-        add_header Cache-Control "public";
-    }
-    
-    # 禁止访问敏感文件
-    location ~ \.(git|htaccess|env|config\.json|db)$ {
-        deny all;
-        return 404;
-    }
-}
-EOF</pre>
-
-            <h3>步骤4：测试并重启Nginx</h3>
-            <pre>
-# 测试配置文件语法
-nginx -t
-
-# 如果配置正确，重启Nginx
-systemctl restart nginx</pre>
-
-            <h3>步骤5：更新面板配置</h3>
-            <pre>
-# 编辑面板配置文件
-vi /opt/node-speedtest-panel/config.json
-
-# 修改panel_url为您的域名
-# "panel_url": "https://your-panel-domain.com"
-
-# 重启面板服务
-systemctl restart node-speedtest-panel
-# 或Docker方式
-docker restart node-speedtest-panel</pre>
-
-            <div class="note">
-                <p><strong>配置说明：</strong></p>
-                <ul>
-                    <li>请将所有的 <code>your-panel-domain.com</code> 替换为您实际的面板域名</li>
-                    <li>SSL证书路径可能因您的获取方式不同而异，请根据实际情况修改</li>
-                    <li>如果您使用Let's Encrypt，证书会自动续期，无需手动操作</li>
-                    <li>配置中包含了WebSocket支持，用于面板的实时更新功能</li>
-                    <li>静态文件缓存可以提高页面加载速度</li>
-                    <li>安全相关头部可以增强网站安全性</li>
-                </ul>
-            </div>
-            
-            <div class="success">
-                <p><strong>完成后：</strong> 您可以通过 <code>https://your-panel-domain.com</code> 访问面板，并享受SSL加密的安全连接。记得在面板配置和所有节点配置中使用此域名。</p>
-            </div>
-        </section>
-
-        <section id="常见问题">
-            <h2>常见问题</h2>
-
-            <h3>1. 如何选择最适合我的部署方式？</h3>
-            <div class="success">
-                <p>根据您的需求和技术能力选择合适的部署方式：</p>
-            </div>
-            <ul>
-                <li><strong>一键部署</strong>：适合快速体验或简单环境
-                    <ul>
-                        <li>安装脚本一键部署：适合各种Linux系统，自动处理依赖安装</li>
-                        <li>Docker快速部署：适合熟悉Docker的用户，环境隔离性好</li>
-                    </ul>
-                </li>
-                <li><strong>手动部署</strong>：适合需要自定义配置的高级用户
-                    <ul>
-                        <li>面板Docker部署：简单但可控性较高</li>
-                        <li>面板手动部署：完全自定义，适合特殊环境</li>
-                    </ul>
-                </li>
-                <li><strong>节点部署</strong>：根据面板和节点之间的网络情况选择
-                    <ul>
-                        <li>从面板下载安装：最简单，适合节点可直接访问面板的情况</li>
-                        <li>从GitHub下载安装：适合节点无法直接访问面板的情况</li>
-                        <li>节点手动部署：适合特殊环境或需要自定义配置</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>2. 节点无法连接到面板</h3>
-            <div class="note">
-                <p>节点连接问题通常与配置或网络有关，请按以下步骤排查：</p>
-            </div>
-            <ul>
-                <li>检查节点配置文件 <code>/opt/node-speedtest/config.json</code> 中的 <code>panel_url</code> 是否正确，确保包含协议前缀(http://或https://)</li>
-                <li>验证节点密钥是否正确，可在面板的节点管理页面查看正确的密钥</li>
-                <li>检查面板服务器防火墙是否开放了8080端口（或您自定义的端口）：
-                    <pre>sudo ufw status</pre>
-                    如需开放端口：
-                    <pre>sudo ufw allow 8080/tcp</pre>
-                </li>
-                <li>检查节点服务器是否能够访问面板服务器：
-                    <pre>curl -v https://your-panel-domain.com/api/ping</pre>
-                </li>
-                <li>查看节点日志文件排查问题：
-                    <pre>tail -f /opt/node-speedtest/logs/node.log</pre>
-                </li>
-                <li>重启节点服务：
-                    <pre>systemctl restart node-speedtest</pre>
-                </li>
-            </ul>
-
-            <h3>3. 面板无法启动</h3>
-            <div class="warning">
-                <p>面板启动失败可能导致所有节点无法连接，请优先解决此问题。</p>
-            </div>
-            <ul>
-                <li>检查配置文件 <code>config.json</code> 格式是否正确（是否有多余或缺失的逗号、引号等）</li>
-                <li>检查日志文件中的错误信息：
-                    <pre>tail -f /opt/node-speedtest-panel/logs/panel.log</pre>
-                    或Docker部署时：
-                    <pre>docker logs node-speedtest-panel</pre>
-                </li>
-                <li>检查数据目录权限是否正确：
-                    <pre>ls -la /opt/node-speedtest-panel/data/</pre>
-                    如需修复权限：
-                    <pre>sudo chown -R 1000:1000 /opt/node-speedtest-panel/data/</pre>
-                </li>
-                <li>检查面板服务状态：
-                    <pre>systemctl status node-speedtest-panel</pre>
-                </li>
-                <li>尝试以调试模式启动面板：
-                    <pre>cd /opt/node-speedtest-panel && ./panel -debug</pre>
-                </li>
-            </ul>
-
-            <h3>4. 测速结果不准确</h3>
-            <div class="note">
-                <p>测速结果受多种因素影响，可以通过以下方式提高准确性：</p>
-            </div>
-            <ul>
-                <li>检查节点服务器网络状况：
-                    <pre>ping -c 10 google.com</pre>
-                    <pre>traceroute your-panel-domain.com</pre>
-                </li>
-                <li>增加测速超时时间，修改面板配置文件中的 <code>speedtest_timeout</code> 值（默认为300秒）：
-                    <pre>vi /opt/node-speedtest-panel/config.json</pre>
-                    或节点配置文件中的 <code>speedtest_timeout</code> 值（默认为120秒）：
-                    <pre>vi /opt/node-speedtest/config.json</pre>
-                </li>
-                <li>调整下载/上传线程数，修改节点配置中的 <code>download_threads</code>（默认为4）和 <code>upload_threads</code>（默认为2）：
-                    <pre>vi /opt/node-speedtest/config.json</pre>
-                </li>
-                <li>确保节点服务器没有限速或QoS策略</li>
-                <li>在不同时段进行多次测试，取平均值</li>
-            </ul>
-
-            <h3>5. 安装脚本失败</h3>
-            <div class="danger">
-                <p>安装失败时请查看具体错误信息，常见问题及解决方案如下：</p>
-            </div>
-            <ul>
-                <li>检查服务器是否能够访问面板或GitHub：
-                    <pre>curl -v https://your-panel-domain.com/api/ping</pre>
-                    <pre>curl -v https://github.com</pre>
-                </li>
-                <li>检查节点密钥是否正确，密钥格式应为32位字符串</li>
-                <li>尝试使用另一种安装方式：
-                    <ul>
-                        <li>如果从面板下载失败，尝试添加 <code>--github</code> 参数：
-                            <pre>curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_NAME --github</pre>
-                        </li>
-                        <li>如果从GitHub下载也失败，尝试手动部署</li>
-                    </ul>
-                </li>
-                <li>检查安装日志：
-                    <pre>cat /tmp/node-speedtest-install.log</pre>
-                </li>
-                <li>确认服务器架构是否支持：
-                    <pre>uname -m</pre>
-                    目前支持的架构有：amd64（x86_64）、arm64（aarch64）和arm（armv7l）
-                </li>
-            </ul>
-
-            <h3>6. 如何更新节点程序</h3>
-            <div class="success">
-                <p>节点程序更新有多种方式，选择最适合您的方法：</p>
-            </div>
-            <ul>
-                <li>使用安装脚本重新安装（推荐）：
-                    <pre>curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_NAME</pre>
-                    安装脚本会自动备份配置文件并保留数据
-                </li>
-                <li>手动更新步骤：
-                    <ol>
-                        <li>停止节点服务：
-                            <pre>systemctl stop node-speedtest</pre>
-                        </li>
-                        <li>备份当前程序和配置：
-                            <pre>cp /opt/node-speedtest/node-speedtest /opt/node-speedtest/node-speedtest.bak
-cp /opt/node-speedtest/config.json /opt/node-speedtest/config.json.bak</pre>
-                        </li>
-                        <li>下载新版本程序：
-                            <pre>curl -L -o /opt/node-speedtest/node-speedtest https://your-panel-domain.com/api/download/node-amd64?key=NODE_KEY</pre>
-                            或从GitHub下载：
-                            <pre>curl -L -o /opt/node-speedtest/node-speedtest https://github.com/RY-zzcn/node-speedtest/releases/download/v1.0.0/node-amd64</pre>
-                        </li>
-                        <li>设置执行权限：
-                            <pre>chmod +x /opt/node-speedtest/node-speedtest</pre>
-                        </li>
-                        <li>启动节点服务：
-                            <pre>systemctl start node-speedtest</pre>
-                        </li>
-                    </ol>
-                </li>
-            </ul>
-
-            <h3>7. 如何备份面板数据</h3>
-            <div class="note">
-                <p>定期备份面板数据可以防止数据丢失，建议每周至少备份一次：</p>
-            </div>
-            <ul>
-                <li>手动部署的备份方法：
-                    <pre>
-# 创建备份目录
-mkdir -p /backup/node-speedtest-panel/$(date +%Y%m%d)
-
-# 备份数据库文件
-cp /opt/node-speedtest-panel/data/panel.db /backup/node-speedtest-panel/$(date +%Y%m%d)/
-
-# 备份配置文件
-cp /opt/node-speedtest-panel/config.json /backup/node-speedtest-panel/$(date +%Y%m%d)/
-
-# 备份日志文件（可选）
-cp /opt/node-speedtest-panel/logs/panel.log /backup/node-speedtest-panel/$(date +%Y%m%d)/
-</pre>
-                </li>
-                <li>Docker部署的备份方法：
-                    <pre>
-# 创建备份目录
-mkdir -p /backup/node-speedtest-panel/$(date +%Y%m%d)
-
-# 备份数据卷
-cp -r /opt/node-speedtest-panel/data/* /backup/node-speedtest-panel/$(date +%Y%m%d)/
-
-# 备份配置文件
-cp /opt/node-speedtest-panel/config.json /backup/node-speedtest-panel/$(date +%Y%m%d)/
-</pre>
-                </li>
-                <li>可以创建自动备份脚本并添加到crontab中实现定期备份：
-                    <pre>
-# 编辑crontab
-crontab -e
-
-# 添加每周日凌晨2点自动备份的任务
-0 2 * * 0 /path/to/backup-script.sh
-</pre>
-                </li>
-            </ul>
-
-            <h3>8. 如何迁移面板</h3>
-            <div class="warning">
-                <p>迁移面板时请确保新服务器环境与原服务器一致，以避免兼容性问题：</p>
-            </div>
-            <ul>
-                <li>步骤一：备份原服务器数据
-                    <pre>
-# 创建备份目录
-mkdir -p /backup/node-speedtest-panel
-
-# 备份数据库和配置文件
-cp /opt/node-speedtest-panel/data/panel.db /backup/node-speedtest-panel/
-cp /opt/node-speedtest-panel/config.json /backup/node-speedtest-panel/
-
-# 打包备份文件
-tar -czvf node-speedtest-panel-backup.tar.gz /backup/node-speedtest-panel/
-</pre>
-                </li>
-                <li>步骤二：将备份文件传输到新服务器
-                    <pre>
-# 使用scp传输备份文件
-scp node-speedtest-panel-backup.tar.gz user@new-server:/tmp/
-</pre>
-                </li>
-                <li>步骤三：在新服务器上部署面板（参考前面的部署步骤）</li>
-                <li>步骤四：恢复数据库和配置文件
-                    <pre>
-# 解压备份文件
-tar -xzvf /tmp/node-speedtest-panel-backup.tar.gz -C /
-
-# 停止面板服务
-systemctl stop node-speedtest-panel
-# 或Docker方式
-docker stop node-speedtest-panel
-
-# 恢复数据库和配置文件
-cp /backup/node-speedtest-panel/panel.db /opt/node-speedtest-panel/data/
-cp /backup/node-speedtest-panel/config.json /opt/node-speedtest-panel/
-
-# 修改配置文件中的面板URL
-vi /opt/node-speedtest-panel/config.json
-# 将panel_url修改为新服务器的域名或IP地址
-
-# 启动面板服务
-systemctl start node-speedtest-panel
-# 或Docker方式
-docker start node-speedtest-panel
-</pre>
-                </li>
-                <li>步骤五：更新所有节点的配置
-                    <pre>
-# 在每个节点服务器上执行
-vi /opt/node-speedtest/config.json
-# 修改panel_url为新的面板地址
-
-# 重启节点服务
-systemctl restart node-speedtest
-</pre>
-                </li>
-            </ul>
-
-            <h3>8. 如何查看日志和排查问题</h3>
-            <div class="note">
-                <p>系统日志是排查问题的重要工具，以下是查看和分析日志的方法：</p>
-            </div>
-            <ul>
-                <li>查看面板日志：
-                    <pre>tail -f /opt/node-speedtest-panel/logs/panel.log</pre>
-                    Docker部署时：
-                    <pre>docker logs -f node-speedtest-panel</pre>
-                </li>
-                <li>查看节点日志：
-                    <pre>tail -f /opt/node-speedtest/logs/node.log</pre>
-                </li>
-                <li>查看系统服务日志：
-                    <pre>journalctl -u node-speedtest-panel -f</pre>
-                    <pre>journalctl -u node-speedtest -f</pre>
-                </li>
-                <li>常见错误代码及解决方案：
-                    <ul>
-                        <li><code>Error 1001</code>: 数据库连接失败 - 检查数据库文件权限</li>
-                        <li><code>Error 1002</code>: 节点认证失败 - 检查节点密钥</li>
-                        <li><code>Error 1003</code>: 测速超时 - 增加超时时间或检查网络</li>
-                        <li><code>Error 1004</code>: API请求失败 - 检查网络连接和防火墙设置</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>9. 一键部署失败怎么办？</h3>
-            <div class="warning">
-                <p>一键部署失败可能有多种原因，以下是常见问题和解决方案：</p>
-            </div>
-            <ul>
-                <li>检查安装日志：
-                    <pre>cat /tmp/node-speedtest-install.log</pre>
-                </li>
-                <li>确认系统环境是否满足要求：
-                    <ul>
-                        <li>支持的系统：Debian/Ubuntu、CentOS/RHEL、Alpine</li>
-                        <li>支持的架构：amd64（x86_64）、arm64（aarch64）、arm（armv7l）</li>
-                    </ul>
-                </li>
-                <li>检查网络连接：
-                    <pre>curl -v https://raw.githubusercontent.com/RY-zzcn/node-speedtest/main/install.sh</pre>
-                    <pre>curl -v https://api.github.com</pre>
-                </li>
-                <li>Docker部署失败：
-                    <ul>
-                        <li>检查Docker是否正确安装：<code>docker --version</code></li>
-                        <li>检查Docker Compose是否正确安装：<code>docker-compose --version</code></li>
-                        <li>查看Docker日志：<code>docker logs node-speedtest-panel</code></li>
-                    </ul>
-                </li>
-                <li>尝试手动部署，以便更好地了解出错环节</li>
-            </ul>
-
-            <h3>10. 如何更新一键部署的系统？</h3>
-            <div class="note">
-                <p>更新系统可以使用以下方法：</p>
-            </div>
-            <ul>
-                <li>使用安装脚本更新：
-                    <pre>./install.sh --all --panel-url https://your-panel-domain.com</pre>
-                    安装脚本会自动备份配置文件并保留数据
-                </li>
-                <li>Docker部署更新：
-                    <pre>cd /path/to/node-speedtest && docker-compose pull && docker-compose up -d</pre>
-                </li>
-                <li>更新特定组件：
-                    <pre>./install.sh --panel --panel-url https://your-panel-domain.com</pre>
-                    <pre>./install.sh --node --panel-url https://your-panel-domain.com --node-name "香港节点"</pre>
-                </li>
-            </ul>
-
-            <h3>11. 如何自定义面板和节点配置</h3>
-            <div class="success">
-                <p>系统提供了多种自定义选项，可以根据需求进行调整：</p>
-            </div>
-            <ul>
-                <li>面板配置文件 <code>config.json</code> 中的高级选项：
-                    <ul>
-                        <li><code>max_concurrent_tests</code>: 最大并发测速数量，默认为5</li>
-                        <li><code>node_check_interval</code>: 节点状态检查间隔（秒），默认为60</li>
-                        <li><code>node_timeout</code>: 节点超时时间（秒），默认为120</li>
-                        <li><code>speedtest_timeout</code>: 测速超时时间（秒），默认为300</li>
-                    </ul>
-                </li>
-                <li>节点配置文件 <code>config.json</code> 中的高级选项：
-                    <ul>
-                        <li><code>heartbeat_interval</code>: 心跳间隔（秒），默认为30</li>
-                        <li><code>download_threads</code>: 下载测速线程数，默认为4</li>
-                        <li><code>upload_threads</code>: 上传测速线程数，默认为2</li>
-                        <li><code>ping_count</code>: Ping测试次数，默认为10</li>
-                    </ul>
-                </li>
-                <li>修改配置后需要重启相应服务：
-                    <pre>systemctl restart node-speedtest-panel</pre>
-                    <pre>systemctl restart node-speedtest</pre>
-                    Docker部署时：
-                    <pre>docker restart node-speedtest-panel</pre>
-                </li>
-            </ul>
-        </section>
     </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 节点管理测速系统 | 文档版本: 1.0.0 | <a href="https://github.com/RY-zzcn/node-speedtest" target="_blank">GitHub 项目</a></p>
-        </div>
-    </footer>
-
-    <script>
-        // 页面滚动时缩小导航栏
-        window.onscroll = function() {
-            scrollFunction();
-            updateProgressBar();
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                document.getElementById("header").classList.add("compact");
-                document.getElementById("back-to-top").classList.add("visible");
-            } else {
-                document.getElementById("header").classList.remove("compact");
-                document.getElementById("back-to-top").classList.remove("visible");
-            }
-        }
-
-        // 更新滚动进度条
-        function updateProgressBar() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-        }
-
-        // 返回顶部按钮
-        document.getElementById("back-to-top").addEventListener("click", function() {
-            document.body.scrollTop = 0; // For Safari
-            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        });
-
-        // 添加GitHub星标数
-        function updateGitHubStats() {
-            fetch('https://api.github.com/repos/RY-zzcn/node-speedtest')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.stargazers_count !== undefined) {
-                        const githubLink = document.querySelector('.github-nav-link span');
-                        if (githubLink) {
-                            githubLink.textContent = `GitHub (${data.stargazers_count}⭐)`;
-                        }
-                    }
-                })
-                .catch(error => console.error('获取GitHub数据失败:', error));
-        }
-        
-        // 尝试更新GitHub星标数
-        updateGitHubStats();
-        
-        // 导航链接高亮
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
-
-        window.addEventListener("scroll", () => {
-            let current = "";
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 70;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                    current = section.getAttribute("id");
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove("active");
-                if (link.getAttribute("href") === "#" + current) {
-                    link.classList.add("active");
-                }
-            });
-        });
-
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    const offsetTop = targetElement.offsetTop - 65;
-                    
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html> 
