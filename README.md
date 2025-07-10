@@ -164,6 +164,98 @@ curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_
 curl -L https://your-panel-domain.com/api/install.sh | bash -s -- NODE_KEY NODE_NAME --github
 ```
 
+## 从源代码构建
+
+如果您想从源代码构建项目，请按照以下步骤操作：
+
+### 前提条件
+
+- Go 1.20 或更高版本
+- Git
+- Make (可选)
+
+### 克隆仓库
+
+```bash
+git clone https://github.com/RY-zzcn/node-speedtest.git
+cd node-speedtest
+```
+
+### 使用Make构建
+
+项目提供了Makefile，可以简化构建过程：
+
+```bash
+# 构建所有组件
+make build
+
+# 只构建面板端
+make panel
+
+# 只构建节点端
+make node
+
+# 运行面板端
+make run-panel
+
+# 运行节点端
+make run-node
+
+# 清理编译产物
+make clean
+```
+
+### 手动构建
+
+如果您不想使用Make，也可以手动构建：
+
+```bash
+# 构建面板端
+cd panel
+go build -o ../bin/panel main.go
+
+# 构建节点端
+cd ../node
+go build -o ../bin/node main.go
+```
+
+### 配置和运行
+
+1. 复制配置文件示例并进行修改：
+
+```bash
+# 面板端
+cp panel/config.json.example panel/config.json
+# 根据需要修改panel/config.json
+
+# 节点端
+cp node/config.json.example node/config.json
+# 根据需要修改node/config.json
+```
+
+2. 启动服务：
+
+```bash
+# 启动面板端
+./bin/panel -config panel/config.json
+
+# 启动节点端
+./bin/node -config node/config.json
+```
+
+也可以使用提供的启动脚本：
+
+```bash
+# 启动面板端
+./start.sh panel panel/config.json
+
+# 启动节点端
+./start.sh node node/config.json
+
+# 同时启动面板端和节点端
+./start.sh all
+```
+
 ## 详细文档
 
 更多详细信息，请参阅[部署文档](docs/deployment.md)或查看[部署教程](部署教程.html)。
