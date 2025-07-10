@@ -1,0 +1,11 @@
+{
+  "listen_port": "8081",
+  "log_path": "./logs/node.log",
+  "panel_url": "http://localhost:8080",
+  "node_id": "",
+  "node_key": "",
+  "heartbeat_interval": 30,
+  "download_threads": 4,
+  "upload_threads": 2,
+  "ping_count": 10
+} 
