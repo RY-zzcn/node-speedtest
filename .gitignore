@@ -6,6 +6,8 @@
 *.dylib
 *.test
 *.out
+/bin/
+/dist/
 
 # Go语言相关
 *.o
@@ -17,6 +19,7 @@
 
 # 日志文件
 *.log
+/logs/
 
 # 数据库文件
 *.db
@@ -26,12 +29,16 @@
 # 配置文件（可能包含敏感信息）
 config.json
 .env
+/config/*.json
+!/config/*.example.json
 
 # 临时文件
 *.tmp
 *.temp
 *.swp
 *~
+.tmp/
+tmp/
 
 # IDE和编辑器文件
 .idea/
@@ -39,10 +46,16 @@ config.json
 *.sublime-workspace
 *.sublime-project
 .DS_Store
+Thumbs.db
+.history/
 
 # 节点和面板编译后的二进制文件
 /node/node
 /panel/panel
+panel-*
+node-*
+!panel-*/
+!node-*/
 
 # 数据目录
 /data/
@@ -50,4 +63,17 @@ config.json
 /panel/data/
 
 # 测试生成的文件
-/coverage/ 
+/coverage/
+/reports/
+*.coverage
+*.coverprofile
+
+# 依赖下载缓存
+.cache/
+.npm/
+node_modules/
+
+# 系统生成文件
+.directory
+.fuse_hidden*
+.Trash-* 
