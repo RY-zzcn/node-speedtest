@@ -1,4 +1,4 @@
-module 节点管理测速项目
+module github.com/RY-zzcn/node-speedtest
 
 go 1.20
 
